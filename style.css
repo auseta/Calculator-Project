@@ -1,0 +1,96 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: sans-serif;
+  background-image: url("./img/bg-image.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.appWrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(120, 159, 194);
+  box-shadow: 1px 5px 25px 0px black;
+  border: 2px solid black;
+  border-radius: 15px;
+  width: 400px;
+  height: 530px;
+}
+
+.calculator-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 2px solid black;
+  background-color: green;
+  height: 80px;
+  width: 350px;
+}
+
+.calculator-operation {
+  text-align: start;
+  margin-left: 8px;
+}
+
+.calculator-result {
+  text-align: end;
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+.keyboard-container {
+  display: flex;
+  margin-top: 25px;
+  height: 300px;
+  width: 340px;
+}
+
+.keyboard-side-a, .keyboard-side-b {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(5, auto);
+}
+
+.keyboard-side-a > button , .keyboard-side-b > button, button[id="equal"]  {
+  font-size: 24px;
+  border-radius: 5px;
+  width: 80px;
+  height: 70px;
+  margin: 2px 2px;
+  cursor: pointer;
+}
+
+.keyboard-side-a > button:hover , .keyboard-side-b > button:hover {
+  background-color: #b7e6e8;
+}
+
+button[id] {
+  background-color: rgb(206, 51, 51);
+}
+
+button[id]:hover {
+  background-color: #df5459;
+}
+
+button[id="equal"] {
+  height: 50px;
+  width: 100px;
+}

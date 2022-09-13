@@ -14,12 +14,14 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  margin: 0;
 }
 
 .appWrapper {
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -31,8 +33,17 @@ body {
   box-shadow: 1px 5px 25px 0px black;
   border: 2px solid black;
   border-radius: 15px;
+  margin-top: 60px;
   width: 400px;
   height: 530px;
+}
+
+.brand {
+  background-color: #5f5f90;
+  color: azure;
+  padding: 5px 15px;
+  border: 1px solid black;
+  box-shadow: 0px 2px 3px 1px black
 }
 
 .calculator-screen {
@@ -40,19 +51,20 @@ body {
   flex-direction: column;
   justify-content: space-around;
   border: 2px solid black;
-  background-color: green;
+  background-color: #46ae46;
   height: 80px;
   width: 350px;
 }
 
 .calculator-operation {
-  text-align: start;
-  margin-left: 8px;
+  font-size: 20px;
+  text-align: end;
+  margin-right: 15px;
 }
 
 .calculator-result {
   text-align: end;
-  font-size: 20px;
+  font-size: 25px;
   margin-right: 15px;
 }
 
@@ -93,4 +105,11 @@ button[id]:hover {
 button[id="equal"] {
   height: 50px;
   width: 100px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(240, 248, 255, 0.349);
+  padding: 15px 0 15px 0;
 }

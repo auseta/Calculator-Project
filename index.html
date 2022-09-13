@@ -11,36 +11,37 @@
 
     <div class="appWrapper">
       <div class="container">
-        <p>Casio B7000-Z</p>
+        <p class="brand">CASIO B7000-Z</p>
         <div class="calculator-screen">
-          <span class="calculator-operation">120</span>
-          <span class="calculator-result">7 + 8 / 9</span>
+          <span class="calculator-operation"></span>
+          <span class="calculator-result"></span>
         </div>
         <div class="keyboard-container">
           <div class="keyboard-side-a">  
-            <button>7</button>
-            <button>8</button>
-            <button>4</button>
-            <button>5</button>
-            <button>1</button>
-            <button>2</button>
-            <button>0</button>
-            <button>.</button>
+            <button data-button-type="number" value="7">7</button>
+            <button data-button-type="number" value="8">8</button>
+            <button data-button-type="number" value="4">4</button>
+            <button data-button-type="number" value="5">5</button>
+            <button data-button-type="number" value="1">1</button>
+            <button data-button-type="number" value="2">2</button>
+            <button data-button-type="number" value="0">0</button>
+            <button id="decimal" value=".">.</button>
           </div>
           <div class="keyboard-side-b">
-            <button>9</button>
-            <button id="divide">/</button>
-            <button>6</button>
-            <button id="multiply">X</button>
-            <button>3</button>
-            <button id="subtract">-</button>
-            <button id="delete">C</button>
-            <button id="add">+</button>
+            <button  data-button-type="number" value="9">9</button>
+            <button  data-button-type="operator" id="divide" value="/">/</button>
+            <button  data-button-type="number" value="6">6</button>
+            <button  data-button-type="operator" id="multiply" value="*">X</button>
+            <button  data-button-type="number" value="3">3</button>
+            <button  data-button-type="operator" id="subtract" value="-">-</button>
+            <button  id="clear">C</button>
+            <button  data-button-type="operator" id="add" value="+">+</button>
           </div>
         </div>
         <button id="equal">=</button>
       </div>
     </div>
+    <div class="footer">Made it by &copy; Augusto Seta 🤓🚀</div>
 
   </body>
 </html>

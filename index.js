@@ -6,56 +6,72 @@ function clearCalculator() {
   currentValueScreen.textContent = "";
 }
 
-function add(num1, num2) {
-  num2 = `${+num1 + +num2}`
-  num1 = "";
-  currentValueScreen.textContent = num2;
-  previousValueScreen.textContent = num1;
+function float() {
+  if (currentValue.includes(".")) {
+    return;
+  } else {
+    currentValue += ".";
+    currentValueScreen.textContent = currentValue;
+  }
 }
 
-function subtract(num1, num2) {
-  currentValueScreen.textContent = `${+num1 - +num2}`;
-  previousValueScreen.textContent = num2;
+function checkOperator() {
+  if (operator !== "" && previousValue !== "" && currentValue !== "") {
+    if (operator === "+") {
+      previousValue = +previousValue + +currentValue;
+    }
+    if (operator === "-") {
+      previousValue = +previousValue - +currentValue;
+    }
+    if (operator === "*") {
+      previousValue = +previousValue * +currentValue;
+    }
+    if (operator === "/") {
+      if (currentValue === "0") {
+        currentValue = "";
+        previousValue = "";
+        previousValueScreen.textContent = "";
+        currentValueScreen.textContent = "ERROR"
+        return
+      }
+      previousValue = +previousValue / +currentValue;
+    }
+    previousValueScreen.textContent = `${previousValue} ${operator}`;
+    currentValueScreen.textContent = "";
+    currentValue = "";
+  }
 }
 
-function multiply(num1, num2) {
-  currentValueScreen.textContent = `${+num1 * +num2}`;
-  previousValueScreen.textContent = num2;
-}
-
-function divide(num1, num2) {
-  num2 = `${+num1 / +num2}`;
-  currentValueScreen.textContent = num2
+function displayError() {
+  currentValue = "";
+  previousValue = "";
+  previousValueScreen.textContent = "";
+  currentValueScreen.textContent = "ERROR"
 }
 
 function operate() {
   if (operator === "+") {
-    add(previousValue, currentValue);
+    previousValue = +previousValue + +currentValue;
   }
   if (operator === "-") {
-    subtract(previousValue, currentValue);
-    currentValue = "";
-    previousValueScreen.textContent = currentValue;
+    previousValue = +previousValue - +currentValue;
   }
   if (operator === "*") {
-    multiply(previousValue, currentValue);
-    currentValue = "";
-    previousValueScreen.textContent = currentValue;
+    previousValue = +previousValue * +currentValue;
   }
   if (operator === "/") {
-    divide(previousValue, currentValue);
-    currentValue = "";
-    previousValueScreen.textContent = currentValue;
+    if (currentValue === "0") {
+      displayError()
+      return
+    } else {
+      previousValue = +previousValue / +currentValue;
+    }
   }
-}
-
-function float() {
-  if (currentValue.includes(".")) {
-    return
-  } else {
-    currentValue +="."
-    currentValueScreen.textContent = currentValue;
-  }
+  previousValueScreen.textContent = "";
+  currentValueScreen.textContent = previousValue
+  operator = "";
+  previousValue = "";
+  currentValue = "";
 }
 
 let previousValue = "";
@@ -89,20 +105,25 @@ numbers.forEach((btn) => {
 
 operators.forEach((btn) => {
   btn.addEventListener("click", (e) => {
+    checkOperator();
+    if ( currentValue === "" && e.target.value === "-") {
+      currentValue = "-";
+      currentValueScreen.textContent = currentValue
+      return
+    }
     operator = e.target.value;
-    if (operator === "-" && currentValue === "") {
-      currentValue = operator;
-      currentValueScreen.textContent += currentValue;
-    } 
-    if ((operator === "+" || operator === "/" || operator === "*") && (currentValue === "-" || currentValue === "")) {
-      return;
-    } 
-    if (currentValue === "-") {
+    if (
+      (operator === "+" ||
+        operator === "/" ||
+        operator === "*" ||
+        operator === "-") &&
+      currentValue === ""
+    ) {
       return;
     }
     previousValue = currentValue;
-    previousValueScreen.textContent = `${previousValue} ${operator}`;
     currentValue = "";
+    previousValueScreen.textContent = `${previousValue} ${operator}`;
     currentValueScreen.textContent = "";
   });
 });
@@ -111,4 +132,4 @@ clear.addEventListener("click", clearCalculator);
 
 equal.addEventListener("click", operate);
 
-decimal.addEventListener("click", float)
+decimal.addEventListener("click", float);

@@ -1,124 +1,114 @@
-function handleNumber(number) {
-  if (previousValue !== "" && currentValue !== "" && operator !== "") {
-    previousValue = "";
-    currentDisplayNumber.textContent = currentValue;
-  }
-  if (currentValue.length < 8) {
-    currentValue += number;
-    currentDisplayNumber.textContent = currentValue;
-  }
-}
-
-function handleOperator(op) {
-  if (previousValue === "") {
-    previousValue = currentValue;
-    checkOperator(op)
-  } else if (currentValue === "") {
-    checkOperator(op)
-  } else {
-    operate();
-    operator = op;
-    currentDisplayNumber.textContent = "0";
-    previousDisplayNumber.textContent = `${previousValue} ${operator}`
-  }
-}
-
-function checkOperator(op) {
-  operator = op;
-  previousDisplayNumber.textContent = `${previousValue} ${operator}`;
-  currentDisplayNumber.textContent = "0";
-  currentValue = "";
-}
-
-function operate () {
-  previousValue = +previousValue;
-  currentValue = +currentValue;
-
-  if (operator === "+") {
-    previousValue +=currentValue;
-  } else if (operator === "-") {
-    previousValue -= currentValue;
-  } else if (operator === "*") {
-    previousValue *= currentValue;
-  } else if (operator === "/") {
-    if (currentValue === 0) {
-      previousValue = "Error";
-      displayResult()
-      return
-    }
-    previousValue /= currentValue;
-  }
-  previousValue = roundNumber(previousValue);
-  previousValue = previousValue.toString();
-  displayResult()
-}
-
-function roundNumber(num) {
-  return Math.round(num * 100000) / 100000
-}
-
-function displayResult() {
-  if (previousValue.length < 8) {
-    currentDisplayNumber.textContent = previousValue;
-  } else {
-    currentDisplayNumber.textContent = `${previousValue.slice(0, 8)}...`
-  }
-  previousDisplayNumber.textContent = "";
-  operator = "";
-  currentValue = "";
-}
-
 function clearCalculator() {
-  currentValue = "";
   previousValue = "";
+  currentValue = "";
   operator = "";
-  previousDisplayNumber.textContent = "0";
-  currentDisplayNumber.textContent = "";
+  previousValueScreen.textContent = "";
+  currentValueScreen.textContent = "";
 }
 
+function add(num1, num2) {
+  num2 = `${+num1 + +num2}`
+  num1 = "";
+  currentValueScreen.textContent = num2;
+  previousValueScreen.textContent = num1;
+}
 
+function subtract(num1, num2) {
+  currentValueScreen.textContent = `${+num1 - +num2}`;
+  previousValueScreen.textContent = num2;
+}
 
-function addDecimal() {
-  if (!currentValue.includes(".")) {
-    currentValue +="."
-    currentDisplayNumber.textContent = currentValue
+function multiply(num1, num2) {
+  currentValueScreen.textContent = `${+num1 * +num2}`;
+  previousValueScreen.textContent = num2;
+}
+
+function divide(num1, num2) {
+  num2 = `${+num1 / +num2}`;
+  currentValueScreen.textContent = num2
+}
+
+function operate() {
+  if (operator === "+") {
+    add(previousValue, currentValue);
+  }
+  if (operator === "-") {
+    subtract(previousValue, currentValue);
+    currentValue = "";
+    previousValueScreen.textContent = currentValue;
+  }
+  if (operator === "*") {
+    multiply(previousValue, currentValue);
+    currentValue = "";
+    previousValueScreen.textContent = currentValue;
+  }
+  if (operator === "/") {
+    divide(previousValue, currentValue);
+    currentValue = "";
+    previousValueScreen.textContent = currentValue;
   }
 }
 
-let currentValue = "";
+function float() {
+  if (currentValue.includes(".")) {
+    return
+  } else {
+    currentValue +="."
+    currentValueScreen.textContent = currentValue;
+  }
+}
+
 let previousValue = "";
+let currentValue = "";
 let operator = "";
 
-const previousDisplayNumber = document.querySelector(".calculator-operation");
-const currentDisplayNumber = document.querySelector(".calculator-result");
+// screen values
+const previousValueScreen = document.querySelector(".previous-value");
+const currentValueScreen = document.querySelector(".current-value");
 
+// buttons ( numbers & operators )
+const numbers = document.querySelectorAll("button[data-button-type='number']");
+const operators = document.querySelectorAll(
+  "button[data-button-type='operator']"
+);
+
+// buttons ( actions )
 const equal = document.querySelector("#equal");
-const decimal = document.querySelector("#decimal");
 const clear = document.querySelector("#clear");
-const operators = document.querySelectorAll("button[data-button-type='operator']")
+const decimal = document.querySelector("#decimal");
 
-const numberButtons = document.querySelectorAll("button[data-button-type='number']")
+// logic
+numbers.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    if (currentValue.length < 8) {
+      currentValue += e.target.value;
+      currentValueScreen.textContent = currentValue;
+    }
+  });
+});
 
-numberButtons.forEach( button => {
-  button.addEventListener("click", (e) => {
-    handleNumber(e.target.value)
-  })
-})
+operators.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    operator = e.target.value;
+    if (operator === "-" && currentValue === "") {
+      currentValue = operator;
+      currentValueScreen.textContent += currentValue;
+    } 
+    if ((operator === "+" || operator === "/" || operator === "*") && (currentValue === "-" || currentValue === "")) {
+      return;
+    } 
+    if (currentValue === "-") {
+      return;
+    }
+    previousValue = currentValue;
+    previousValueScreen.textContent = `${previousValue} ${operator}`;
+    currentValue = "";
+    currentValueScreen.textContent = "";
+  });
+});
 
-operators.forEach( button => {
-  button.addEventListener("click", (e) => {
-    handleOperator(e.target.value);
-  })
-})
+clear.addEventListener("click", clearCalculator);
 
-equal.addEventListener("click", () => {
-  if (previousValue !== "" && currentValue !== "") {
-    operate()
-  }
-})
+equal.addEventListener("click", operate);
 
-clear.addEventListener("click", clearCalculator)
-
-decimal.addEventListener("click", () => {
-  addDecimal()
-})
+decimal.addEventListener("click", float)

@@ -56,13 +56,13 @@ body {
   width: 350px;
 }
 
-.calculator-operation {
+.previous-value {
   font-size: 20px;
   text-align: end;
   margin-right: 15px;
 }
 
-.calculator-result {
+.current-value {
   text-align: end;
   font-size: 25px;
   margin-right: 15px;

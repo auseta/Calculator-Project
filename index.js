@@ -15,7 +15,7 @@ function float() {
   }
 }
 
-function checkOperator() {
+function checkOperator(e) {
   if (operator !== "" && previousValue !== "" && currentValue !== "") {
     if (operator === "+") {
       previousValue = +previousValue + +currentValue;
@@ -36,6 +36,7 @@ function checkOperator() {
       }
       previousValue = +previousValue / +currentValue;
     }
+    operator = e.target.value
     previousValueScreen.textContent = `${previousValue} ${operator}`;
     currentValueScreen.textContent = "";
     currentValue = "";
@@ -105,7 +106,7 @@ numbers.forEach((btn) => {
 
 operators.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    checkOperator();
+    checkOperator(e);
     if ( currentValue === "" && e.target.value === "-") {
       currentValue = "-";
       currentValueScreen.textContent = currentValue

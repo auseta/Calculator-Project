@@ -108,7 +108,7 @@ numbers.forEach((btn) => {
 
 operators.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    if ( (currentValue === "" && e.target.value === "-" && negativeValue === "") || (currentValue === "" && operator === "-" )) {
+    if ( (currentValue === "" && e.target.value === "-" && negativeValue === "")) {
       negativeValue = "-"
       currentValue = negativeValue
       currentValueScreen.textContent = currentValue

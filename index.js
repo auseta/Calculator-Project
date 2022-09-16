@@ -2,6 +2,7 @@ function clearCalculator() {
   previousValue = "";
   currentValue = "";
   operator = "";
+  negativeValue = "";
   previousValueScreen.textContent = "";
   currentValueScreen.textContent = "";
 }
@@ -43,6 +44,10 @@ function checkOperator(e) {
   }
 }
 
+function checkNegative(e) {
+  
+}
+
 function displayError() {
   currentValue = "";
   previousValue = "";
@@ -78,6 +83,7 @@ function operate() {
 let previousValue = "";
 let currentValue = "";
 let operator = "";
+let negativeValue = "";
 
 // screen values
 const previousValueScreen = document.querySelector(".previous-value");
@@ -107,9 +113,11 @@ numbers.forEach((btn) => {
 operators.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     checkOperator(e);
-    if ( currentValue === "" && e.target.value === "-") {
-      currentValue = "-";
+    if ( (currentValue === "" && e.target.value === "-" && negativeValue === "") || (currentValue === "" && e.target.value === "-" && negativeValue === "" && previousValueScreen.textContent.includes("-"))) {
+      negativeValue = "-"
+      currentValue = negativeValue
       currentValueScreen.textContent = currentValue
+      negativeValue = "";
       return
     }
     operator = e.target.value;
@@ -124,6 +132,7 @@ operators.forEach((btn) => {
     }
     previousValue = currentValue;
     currentValue = "";
+    negativeValue = "";
     previousValueScreen.textContent = `${previousValue} ${operator}`;
     currentValueScreen.textContent = "";
   });

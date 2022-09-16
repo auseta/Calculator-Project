@@ -44,10 +44,6 @@ function checkOperator(e) {
   }
 }
 
-function checkNegative(e) {
-  
-}
-
 function displayError() {
   currentValue = "";
   previousValue = "";
@@ -112,7 +108,6 @@ numbers.forEach((btn) => {
 
 operators.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    checkOperator(e);
     if ( (currentValue === "" && e.target.value === "-" && negativeValue === "") || (currentValue === "" && e.target.value === "-" && negativeValue === "" && previousValueScreen.textContent.includes("-"))) {
       negativeValue = "-"
       currentValue = negativeValue
@@ -120,6 +115,7 @@ operators.forEach((btn) => {
       negativeValue = "";
       return
     }
+    checkOperator(e);
     operator = e.target.value;
     if (
       (operator === "+" ||

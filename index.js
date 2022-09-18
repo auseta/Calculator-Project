@@ -16,6 +16,23 @@ function float() {
   }
 }
 
+function setNegative() {
+  console.log("paso algo...");
+  if (currentValueScreen.textContent[0] === undefined) {
+    currentValue = "-";
+    currentValueScreen.textContent = currentValue;
+  }
+}
+
+function delNumber() {
+  if (currentValueScreen.textContent !== "") {
+    let arrCurrentValue = currentValue.split("");
+    arrCurrentValue.pop()
+    currentValue = arrCurrentValue.join("");
+    currentValueScreen.textContent = currentValue
+  }
+}
+
 function checkOperator(e) {
   if (operator !== "" && previousValue !== "" && currentValue !== "") {
     if (operator === "+") {
@@ -79,7 +96,6 @@ function operate() {
 let previousValue = "";
 let currentValue = "";
 let operator = "";
-let negativeValue = "";
 
 // screen values
 const previousValueScreen = document.querySelector(".previous-value");
@@ -95,6 +111,9 @@ const operators = document.querySelectorAll(
 const equal = document.querySelector("#equal");
 const clear = document.querySelector("#clear");
 const decimal = document.querySelector("#decimal");
+const negative = document.querySelector("#negative");
+const del = document.querySelector("#delete");
+const onOff = document.querySelector("#on-off");
 
 // logic
 numbers.forEach((btn) => {
@@ -108,13 +127,6 @@ numbers.forEach((btn) => {
 
 operators.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    if ( (currentValue === "" && e.target.value === "-" && negativeValue === "")) {
-      negativeValue = "-"
-      currentValue = negativeValue
-      currentValueScreen.textContent = currentValue
-      negativeValue = "";
-      return
-    }
     checkOperator(e);
     operator = e.target.value;
     if (
@@ -139,3 +151,7 @@ clear.addEventListener("click", clearCalculator);
 equal.addEventListener("click", operate);
 
 decimal.addEventListener("click", float);
+
+negative.addEventListener("click", setNegative)
+
+del.addEventListener("click", delNumber);
